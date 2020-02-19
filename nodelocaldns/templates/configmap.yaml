@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: node-local-dns
+  namespace: kube-system
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+    heritage: "{{ .Release.Service }}"
+data:
+  Corefile: |
+    {{ .Values.clusterDomain }}:53 {
+        errors
+        cache {
+                success 9984 30
+                denial 9984 5
+        }
+        reload
+        loop
+        bind {{ .Values.localDNSAddress }}
+        forward . {{ .Values.clusterDNSAddress }} {
+                force_tcp
+        }
+        prometheus :9253
+        health {{ .Values.localDNSAddress }}:8080
+        }
+    in-addr.arpa:53 {
+        errors
+        cache 30
+        reload
+        loop
+        bind {{ .Values.localDNSAddress }}
+        forward . {{ .Values.clusterDNSAddress }} {
+                force_tcp
+        }
+        prometheus :9253
+        }
+    ip6.arpa:53 {
+        errors
+        cache 30
+        reload
+        loop
+        bind {{ .Values.localDNSAddress }}
+        forward . {{ .Values.clusterDNSAddress }} {
+                force_tcp
+        }
+        prometheus :9253
+        }
+    .:53 {
+        errors
+        cache 30
+        reload
+        loop
+        bind {{ .Values.localDNSAddress }}
+        forward . {{ .Values.clusterDNSAddress }} {
+                force_tcp
+        }
+        prometheus :9253
+        }
+    api.telegram.org:53 {
+        errors
+        cache {
+            success 9984 30
+            denial 9984 5
+        }
+        reload
+        loop
+        bind {{ .Values.localDNSAddress }}
+        forward . {{ .Values.clusterDNSAddress }} {
+            force_tcp
+        }
+        prometheus :9253
+    }

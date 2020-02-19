@@ -1,0 +1,26 @@
+namespace: "kube-system"
+serviceaccount: "node-local-dns"
+
+clusterDomain: "cluster.local"
+
+localDNSAddress: "169.254.20.10"
+clusterDNSAddress: "10.136.0.3"
+
+image:
+  repository: "k8s.gcr.io/k8s-dns-node-cache"
+  tag: "1.15.7"
+  pullPolicy: Always
+
+pprofPort: 6068
+
+clusterDNSSelector:
+  k8s-app: coredns
+
+res:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi

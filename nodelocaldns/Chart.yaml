@@ -1,0 +1,14 @@
+apiVersion: v1
+version: 0.1.4
+appVersion: "1.15.7"
+name: node-local-dns
+description: nodelocaldns is a local DNS cache for k8s pods
+keywords:
+- coredns
+- dns
+- kubedns
+- nodelocaldns
+icon: https://coredns.io/images/CoreDNS_Colour_Horizontal.png
+maintainers:
+- name: Victor Yagofarov
+  email: xnasx@yandex.ru

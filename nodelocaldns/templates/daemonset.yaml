@@ -38,8 +38,9 @@ spec:
       - name: node-cache
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        {{- toYaml .Values.res | trim | nindent 8 }}
+        # "-kubednscm", "/etc/coredns" -- enables configmap reloading feature
         args: [ "-localip", "{{ .Values.localDNSAddress }}", "-conf", "/etc/Corefile", "-upstreamsvc", "kube-dns-upstream", "-kubednscm", "/etc/coredns" ]
+        {{- toYaml .Values.res | trim | nindent 8 }}
         securityContext:
           privileged: true
         ports:
@@ -52,8 +53,8 @@ spec:
         - containerPort: 9253
           name: metrics
           protocol: TCP
-        {{- if .Values.pprofPort }}
-        - containerPort: {{ .Values.pprofPort }}
+        {{- if .Values.profilingPort }}
+        - containerPort: {{ .Values.profilingPort }}
           name: pprof
           protocol: TCP
         {{- end }}

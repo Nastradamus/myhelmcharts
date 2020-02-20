@@ -54,6 +54,11 @@ data:
         forward . {{ .Values.clusterDNSAddress }} {
                 force_tcp
         }
+        {{- if .Values.profilingPort }}
+        pprof :{{ .Values.profilingPort }} {
+           block
+        }
+        {{- end }}
         prometheus :9253
         }
     api.telegram.org:53 {

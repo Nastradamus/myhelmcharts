@@ -8,10 +8,11 @@ clusterDNSAddress: "10.136.0.3"
 
 image:
   repository: "k8s.gcr.io/k8s-dns-node-cache"
-  tag: "1.15.7"
-  pullPolicy: Always
+  tag: "1.15.8"
+  pullPolicy: IfNotPresent
 
-pprofPort: 6068
+# supports only since 1.15.8
+profilingPort: 6068
 
 clusterDNSSelector:
   k8s-app: coredns
